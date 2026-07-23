@@ -19,14 +19,33 @@ public class Primalac {
         }
     }
 
-    public synchronized Object primi() {
-        try {
-            return in.readObject();
-        } catch (IOException ex) {
-            System.out.println(ex);
-        } catch (ClassNotFoundException ex) {
-            System.out.println(ex);
-        }
-        return null;
-    }
+public synchronized Object primi() {
+try {
+return in.readObject();
+} catch (IOException ex) {
+try (
+FileWriter fw = new FileWriter("server_error.log", true);
+PrintWriter pw = new PrintWriter(fw)
+) {
+pw.println("GRESKA U PRIMALAC.primi()");
+ex.printStackTrace(pw);
+} catch (Exception e) {
+e.printStackTrace();
+}
+
+} catch (ClassNotFoundException ex) {
+
+try (
+FileWriter fw = new FileWriter("server_error.log", true);
+PrintWriter pw = new PrintWriter(fw)
+) {
+pw.println("GRESKA U PRIMALAC.primi()");
+ex.printStackTrace(pw);
+} catch (Exception e) {
+e.printStackTrace();
+}
+}
+
+return null;
+}
 }
